@@ -48,14 +48,14 @@ var dotruncate = function(conn, cb) {
 };
 
 var doinsert = function(conn, cb) {
-  var sql = "INSERT INTO DOLAR VALUES (:a, :b)";
+  var sql = "INSERT INTO PRUEBA VALUES (:a, :b)";
 
   var binds = [
-    { a: 1, b: "Test 1 (One)." },
-    { a: 2, b: "Test 2 (Two)." },
-    { a: 3, b: "Test 3 (Three)." },
+    { a: 1, b: "Test 1 (One)" },
+    { a: 2, b: "Test 2 (Two)" },
+    { a: 3, b: "Test 3 (Three)" },
     { a: 4 },
-    { a: 5, b: "Test 5 (Five)." }
+    { a: 5, b: "Test 5 (Five)" }
   ];
 
   // bindDefs is optional for IN binds but it is generally recommended.
@@ -77,14 +77,49 @@ var doinsert = function(conn, cb) {
   });
 };
 
+
+var doinsertDolar = function(conn, cb) {
+  
+  var sql = "INSERT INTO DOLAR VALUES (:a, :b, :c, :d)";
+  var sql = "INSERT INTO DOLAR VALUES (TO_DATE(:a,'dd/mm/yyyy'), :b, :c, :d)";
+
+  var binds = [
+    {b: 44.22, c: 44.33, d: 44.44},
+    {b: 55.22, c: 55.33, d: 55.44}
+  ];
+
+  // bindDefs is optional for IN binds but it is generally recommended.
+  // Without it the data must be scanned to find sizes and types.
+  var options = {
+    autoCommit: true,
+    bindDefs: {
+      a: { type: oracledb.DATE },
+      b: { type: oracledb.NUMBER },
+      c: { type: oracledb.NUMBER },
+      d: { type: oracledb.NUMBER }
+    } };
+
+  conn.executeMany(sql, binds, options, function (err, result) {
+    if (err)
+      return cb(err, conn);
+    else {
+      console.log("Result is:", result);
+      return cb(null, conn);
+    }
+  });
+};
+
+
 async.waterfall(
   [
     doconnect,
     dotruncate,
-    doinsert
+    doinsertDolar
   ],
   function (err, conn) {
     if (err) { console.error("In waterfall error cb: ==>", err, "<=="); }
     if (conn)
       dorelease(conn);
   });
+
+
