@@ -1,5 +1,5 @@
-import conf from './conf';
 import request = require('request');
+
 
 // tslint:disable-next-line: max-line-length
 const bcraToken = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODk1MTkzNDIsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJndWlsbGVybW8ucGljYXJkaUBnbWFpbC5jb20ifQ.9jOgB0hbGthcW0Alv4QnVytujtrZOA5dHCPQLHc0V5XIYPPQdjbZhGJ3ktvqbDArbSM0eQ1zcfZQWHdynpGDUA';

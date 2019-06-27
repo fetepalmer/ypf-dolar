@@ -1,62 +1,63 @@
-var async = require('async');
-var oracledb = require('oracledb');
-var dbConfig = require('./conf/dbconfig.js');
+import async from 'async';
+import oracledb from 'oracledb';
+import config from './conf/config';
 
-var doconnect = function(cb) {
-  oracledb.getConnection(dbConfig, cb);
+
+let doconnect = function(cb) {
+  oracledb.getConnection(config, cb);
 };
 
-var dorelease = function(conn) {
+let dorelease = function(conn) {
   conn.close(function (err) {
     if (err)
       console.error(err.message);
   });
 };
 
-var dotruncate = function(conn, cb) {
-  conn.execute("TRUNCATE TABLE DOLAR", function (err) {
+let dotruncate = function(conn, cb) {
+  conn.execute('TRUNCATE TABLE DOLAR', function (err) {
     return cb(err, conn);
   });
 };
 
-var doinsert = function(conn, cb) {
-  var sql = "INSERT INTO DOLAR VALUES (:a, :b)";
+let doinsertDolar = function(conn, cb) {
+  let sql = 'INSERT INTO DOLAR VALUES (TO_DATE(:a,"dd/mm/yyyy"), :b, :c, :d)';
+  // sql = 'INSERT INTO DOLAR VALUES (:a, :b, :c, :d)';
 
-  var binds = [
-    { a: 1, b: "Test 1 (One)." },
-    { a: 2, b: "Test 2 (Two)." },
-    { a: 3, b: "Test 3 (Three)." },
-    { a: 4 },
-    { a: 5, b: "Test 5 (Five)." }
-  ];
+  let binds = [
+      {b: 44.22, c: 44.33, d: 44.44},
+      {b: 55.22, c: 55.33, d: 55.44}
+    ];
+    // bindDefs is optional for IN binds but it is generally recommended.
+    // Without it the data must be scanned to find sizes and types.
 
-  // bindDefs is optional for IN binds but it is generally recommended.
-  // Without it the data must be scanned to find sizes and types.
-  var options = {
-    autoCommit: true,
-    bindDefs: {
-      a: { type: oracledb.NUMBER },
-      b: { type: oracledb.STRING, maxSize: 15 }
-    } };
+  let options = {
+        autoCommit: true,
+        bindDefs: {
+        a: { type: oracledb.DATE },
+        b: { type: oracledb.NUMBER },
+        c: { type: oracledb.NUMBER },
+        d: { type: oracledb.NUMBER }
+      } };
 
   conn.executeMany(sql, binds, options, function (err, result) {
-    if (err)
-      return cb(err, conn);
-    else {
-      console.log("Result is:", result);
-      return cb(null, conn);
-    }
-  });
-};
+  if (err)
+        return cb(err, conn);
+      else {
+        console.log('Result is:', result);
+        return cb(null, conn);
+      }
+    });
+  };
 
 async.waterfall(
   [
     doconnect,
     dotruncate,
-    doinsert
+    doinsertDolar
   ],
   function (err, conn) {
-    if (err) { console.error("In waterfall error cb: ==>", err, "<=="); }
+    if (err) { console.error('In waterfall error cb: ==>', err, '<=='); }
     if (conn)
       dorelease(conn);
   });
