@@ -1,6 +1,6 @@
 import async from 'async';
 import oracledb from 'oracledb';
-import config from './conf/config';
+import config = require('./conf/config');
 
 
 let doconnect = function(cb) {

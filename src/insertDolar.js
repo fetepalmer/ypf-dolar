@@ -2,9 +2,9 @@
 exports.__esModule = true;
 var async_1 = require("async");
 var oracledb_1 = require("oracledb");
-var config_1 = require("./conf/config");
+var config = require("./conf/config");
 var doconnect = function (cb) {
-    oracledb_1["default"].getConnection(config_1["default"], cb);
+    oracledb_1["default"].getConnection(config, cb);
 };
 var dorelease = function (conn) {
     conn.close(function (err) {
