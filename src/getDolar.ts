@@ -1,4 +1,4 @@
-import request = require('request');
+import request from 'request';
 
 
 // tslint:disable-next-line: max-line-length
@@ -16,3 +16,4 @@ async function getLastDolar(callback: (value: number, date: string) => void) {
 }
 
 getLastDolar((value, date) => console.log(value, date));
+

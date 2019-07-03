@@ -21,8 +21,8 @@ let dotruncate = function(conn, cb) {
 };
 
 let doinsertDolar = function(conn, cb) {
-  let sql = 'INSERT INTO DOLAR VALUES (TO_DATE(:a,"dd/mm/yyyy"), :b, :c, :d)';
-  // sql = 'INSERT INTO DOLAR VALUES (:a, :b, :c, :d)';
+  // let sql = 'INSERT INTO DOLAR VALUES (TO_DATE(:a,"dd/mm/yyyy"), :b, :c, :d)';
+  let sql = 'INSERT INTO DOLAR VALUES (:a, :b, :c, :d)';
 
   let binds = [
       {b: 44.22, c: 44.33, d: 44.44},

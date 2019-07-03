@@ -1,3 +1,5 @@
+"prepublishOnly": "npm run-script build",
+"start": "node dist/index.js", 
 ----------------------------------------
 -- OK
 ----------------------------------------
@@ -28,3 +30,4 @@ hacer la insercion en oracle desde el node js
 npm run-script launch
 tsc index.ts -w
 tsc *.ts -w    //para que se ejecute en modo observador. compila los cambios automaticamente
+----------------------------

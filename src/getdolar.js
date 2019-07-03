@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var request = require("request");
+var request_1 = require("request");
 // tslint:disable-next-line: max-line-length
 var bcraToken = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODk1MTkzNDIsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJndWlsbGVybW8ucGljYXJkaUBnbWFpbC5jb20ifQ.9jOgB0hbGthcW0Alv4QnVytujtrZOA5dHCPQLHc0V5XIYPPQdjbZhGJ3ktvqbDArbSM0eQ1zcfZQWHdynpGDUA';
 function getLastDolar(callback) {
@@ -49,9 +49,10 @@ function getLastDolar(callback) {
             }
         }
         return __generator(this, function (_a) {
-            request.get('https://api.estadisticasbcra.com/usd_of', { json: true }, processResponse).auth('', '', true, bcraToken);
+            request_1["default"].get('https://api.estadisticasbcra.com/usd_of', { json: true }, processResponse).auth('', '', true, bcraToken);
             return [2 /*return*/];
         });
     });
 }
-getLastDolar(function (value, date) { return console.log(value, date); });
+// getLastDolar((value, date) => console.log(value, date));
+//export function getLastDolar();
